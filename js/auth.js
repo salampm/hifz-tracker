@@ -27,11 +27,26 @@ function waitForFirebase(cb) {
 waitForFirebase(() => {
     onAuthStateChanged(auth, async (user) => {
         if (user) {
-            // User is signed in, fetch profile
             try {
-                const userDoc = await fb.getDoc(fb.doc(db, 'users', user.uid));
+                // Try UID first (Best practice)
+                let userDoc = await fb.getDoc(fb.doc(db, 'users', user.uid));
+                let profile = null;
+
                 if (userDoc.exists()) {
-                    const profile = userDoc.data();
+                    profile = userDoc.data();
+                } else {
+                    // Fallback: Search by email (for existing/manual users)
+                    console.log("UID not found, searching by email...");
+                    const q = fb.query(fb.collection(db, 'users'), fb.where('email', '==', user.email));
+                    const snap = await fb.getDocs(q);
+                    if (!snap.empty) {
+                        profile = snap.docs[0].data();
+                        // Optional: Migrate this user to use UID as document ID for better performance next time
+                        await fb.setDoc(fb.doc(db, 'users', user.uid), { ...profile, lastLogin: fb.serverTimestamp() });
+                    }
+                }
+
+                if (profile) {
                     if (profile.approved) {
                         loginSuccess({ ...profile, uid: user.uid });
                     } else {
@@ -39,15 +54,13 @@ waitForFirebase(() => {
                         doLogout();
                     }
                 } else {
-                    showError("User profile not found in database.");
-                    doLogout();
+                    showError("User profile (" + user.email + ") not found in database.");
                 }
             } catch (error) {
                 console.error("Error fetching profile:", error);
                 showError("Error loading user profile.");
             }
         } else {
-            // User is signed out
             showLoginScreen();
         }
     });
