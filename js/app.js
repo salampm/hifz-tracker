@@ -1092,6 +1092,7 @@ window.closeModal = closeModal;
 window.showToast = showToast;
 window.previewReport = previewReport;
 window.loadUsers = loadUsers;
+window.loadAdminUsers = loadAdminUsers;
 window.toggleUserStatus = toggleUserStatus;
 window.showAddAccountModal = showAddAccountModal;
 window.createNewUserAccount = createNewUserAccount;
