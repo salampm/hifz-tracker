@@ -104,6 +104,7 @@ function renderCurrentView(data) {
         case 'admin': c.innerHTML = renderAdmin(); loadAdminUsers(); break;
         case 'profile': c.innerHTML = renderProfile(data); loadProfileData(data); break;
         case 'entry': c.innerHTML = renderEntry(data); break;
+        case 'users': c.innerHTML = renderUserManagement(); loadUsers(); break;
     }
 }
 
@@ -614,20 +615,6 @@ async function generateReport() {
     window.open('/hifz-report/?' + params.toString(), '_blank');
 }
 
-function renderCurrentView(currentView, data) {
-    const c = document.getElementById('content');
-    if (!c) return;
-    switch (currentView) {
-        case 'dashboard': c.innerHTML = renderDashboard(); setTimeout(loadStudentStatuses, 100); break;
-        case 'students': c.innerHTML = renderStudents(); break;
-        case 'enroll': c.innerHTML = renderEnroll(); break;
-        case 'reports': c.innerHTML = renderReports(); break;
-        case 'admin': c.innerHTML = renderAdmin(); break;
-        case 'profile': c.innerHTML = renderProfile(data); loadProfileData(data); break;
-        case 'entry': c.innerHTML = renderEntry(data); break;
-        case 'users': c.innerHTML = renderUserManagement(); loadUsers(); break;
-    }
-}
 
 function renderAdmin() {
     var canManage = ['owner', 'admin', 'management'].includes(window.currentUser?.role);
@@ -1020,16 +1007,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     waitForFirebase(() => {
-        var saved = localStorage.getItem('jsiUser');
-        if (saved) {
-            try {
-                var user = JSON.parse(saved);
-                if (user && user.username) {
-                    if (window.loginSuccess) window.loginSuccess(user);
-                    return;
-                }
-            } catch (e) { }
-        }
+        // Auth is handled by onAuthStateChanged in auth.js
     });
 
     document.querySelectorAll('.pin-btn').forEach(function (btn) {
