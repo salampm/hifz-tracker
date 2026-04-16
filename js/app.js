@@ -62,7 +62,7 @@ function loadStudents() {
         window.students = [];
         snap.forEach(d => window.students.push({ id: d.id, ...d.data() }));
         setTimeout(loadStudentStatuses, 200);
-        if (currentView === 'dashboard' || currentView === 'students') renderCurrentView();
+        if (currentView === 'dashboard' || currentView === 'students') renderAppView();
     });
 }
 
@@ -78,10 +78,10 @@ function navigate(view, data) {
         const adminBtn = document.getElementById('adminNavBtn');
         if (adminBtn) adminBtn.classList.add('active');
     }
-    renderCurrentView(data);
+    renderAppView(data);
 }
 
-function renderCurrentView(data) {
+function renderAppView(data) {
     var c = document.getElementById('appContent');
     if (!c) return;
     var titles = { dashboard: 'JSI Hifz Pro', students: 'Students', enroll: 'Enroll Student', reports: 'Reports', admin: 'Administration', profile: 'Student Profile', entry: 'Daily Entry' };
@@ -192,7 +192,7 @@ ${s.name}
 
 function switchStudentView(view) {
     window.studentView = view;
-    renderCurrentView();
+    renderAppView();
 }
 
 function filterStudents() {
@@ -1023,7 +1023,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Attach functions to window for onclick handlers in HTML
 window.loadStudents = loadStudents;
 window.navigate = navigate;
-window.renderCurrentView = renderCurrentView;
+window.renderAppView = renderAppView;
 window.switchStudentView = switchStudentView;
 window.filterStudents = filterStudents;
 window.filterByClass = filterByClass;
