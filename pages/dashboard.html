@@ -1,0 +1,41 @@
+<!-- Dashboard Page Template -->
+<div class="dashboard-header">
+    <div class="dash-greeting">Welcome back,</div>
+    <div class="dash-name" id="dashUserName">Teacher 👋</div>
+    <div class="dash-date" id="dashTodayDate">Monday, 1 January 2024</div>
+</div>
+
+<div class="stats-row">
+    <div class="stat-card">
+        <div class="stat-num" id="statStudentCount">0</div>
+        <div class="stat-lbl">Students</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-num" id="statEntryCount">0</div>
+        <div class="stat-lbl">Entries Today</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-num" id="statAbsentCount">0</div>
+        <div class="stat-lbl">Absent</div>
+    </div>
+</div>
+
+<div class="section-title">Pending Reports</div>
+<div id="pendingReports"></div>
+
+<div class="section-title">Classes Needing Attention</div>
+<div id="classAttention"></div>
+
+<div class="section-title">Recent Activity</div>
+<div style="display:flex;gap:6px;padding:0.5rem 1rem;flex-wrap:wrap" id="statusFilters">
+    <button class="class-chip active" onclick="filterStatus('all',this)">All</button>
+    <button class="class-chip" onclick="filterStatus('noentry',this)">No Entry</button>
+    <button class="class-chip" onclick="filterStatus('absent',this)">Absent</button>
+    <button class="class-chip" onclick="filterStatus('sent',this)">Report Sent</button>
+</div>
+
+<div id="dashboardRecentActivity"></div>
+
+<div style="padding:1rem">
+    <button class="btn-primary" onclick="navigate('students')">View All Students</button>
+</div>
