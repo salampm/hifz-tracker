@@ -638,7 +638,34 @@ function renderAdmin() {
     </div>
     <div class="section-title">Teachers & Staff</div>
     <div id="userList"><div class="loading"><div class="spinner"></div> Loading...</div></div>
-    <div style="padding:1rem"><button class="btn-primary" onclick="showAddUser()">+ Add Staff Member</button></div>`;
+    <div style="padding:1rem"><button class="btn-primary" onclick="showAddAccountModal('teacher')">+ Add Staff Member</button></div>`;
+}
+
+async function loadAdminUsers() {
+    const cont = document.getElementById('userList');
+    if (!cont) return;
+    try {
+        const snap = await fb.getDocs(fb.collection(db, 'users'));
+        const users = [];
+        snap.forEach(d => users.push({ id: d.id, ...d.data() }));
+        const staff = users.filter(u => u.role !== 'parent').slice(0, 5);
+        if (staff.length === 0) {
+            cont.innerHTML = '<div class="empty-state-text" style="padding:1rem;font-size:0.8rem">No staff records found.</div>';
+            return;
+        }
+        cont.innerHTML = staff.map(u => `
+            <div class="student-item" style="padding: 0.75rem 1rem;">
+                <div class="avatar" style="width:32px;height:32px;font-size:0.8rem">${u.name.charAt(0)}</div>
+                <div class="student-info">
+                    <div class="student-name" style="font-size:0.85rem">${u.name} <span class="history-tag" style="font-size:0.6rem;padding:1px 6px">${u.role}</span></div>
+                    <div class="student-meta" style="font-size:0.75rem">${u.email || 'No email set'}</div>
+                </div>
+            </div>
+        `).join('');
+    } catch (e) {
+        console.error(e);
+        cont.innerHTML = '<div class="empty-state-text">Error loading staff.</div>';
+    }
 }
 
 function renderUserManagement() {
