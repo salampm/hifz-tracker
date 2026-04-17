@@ -24,7 +24,7 @@
     <div id="loginScreen" class="screen active">
         <div class="login-card">
             <div class="login-logo-container">
-                <img src="assets/logo.png" alt="JSI Hifz Pro Logo" style="width: 120px; height: auto; margin-bottom: 1rem; border-radius: 50%; border: 2px solid rgba(255,255,255,0.2);">
+                <img src="assets/logo_dark.png" alt="JSI Hifz Pro Logo" style="width: 140px; height: auto; margin-bottom: 0.5rem;">
             </div>
             <div class="login-subtitle">Jamia Swahaba Al-Islamia</div>
             <div class="login-tagline">✧ Hifz Pro — Cloud Edition ✧</div>
@@ -39,6 +39,10 @@
                 </div>
             </div>
             <button class="btn-primary" id="signInBtn">Sign In</button>
+            <div style="margin-top:1.5rem;display:flex;justify-content:space-between;font-size:0.75rem">
+                <a href="#" style="color:var(--primary);text-decoration:none" onclick="handleForgotPassword()">Forgot Password?</a>
+                <a href="#" style="color:rgba(255,255,255,0.6);text-decoration:none" onclick="showModal('<div class=\'modal-title\'>Request Admission</div><div class=\'empty-state-text\'>Please contact the Jamia Swahaba office at <b>04998208333</b> for new admissions and login requests.</div>')">Request Access</a>
+            </div>
             <div class="login-error" id="loginError"></div>
         </div>
     </div>
@@ -59,24 +63,28 @@
         
         <nav class="bottom-nav">
             <button class="nav-item active" id="nav-dashboard" onclick="navigate('dashboard')">
-                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
-                Dashboard
+                <span class="nav-icon">⊞</span>
+                <span class="nav-text">Dashboard</span>
             </button>
             <button class="nav-item" id="nav-students" onclick="navigate('students')">
-                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                Students
+                <span class="nav-icon">👤</span>
+                <span class="nav-text">Students</span>
+            </button>
+            <button class="nav-item" id="nav-diary" onclick="navigate('diary')">
+                <span class="nav-icon">📖</span>
+                <span class="nav-text">Diary</span>
             </button>
             <button class="nav-item" id="nav-enroll" onclick="navigate('enroll')">
-                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                Enroll
+                <span class="nav-icon">＋</span>
+                <span class="nav-text">Enroll</span>
             </button>
             <button class="nav-item" id="nav-reports" onclick="navigate('reports')">
-                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
-                Reports
+                <span class="nav-icon">📄</span>
+                <span class="nav-text">Reports</span>
             </button>
-            <button class="nav-item" id="adminNavBtn" onclick="navigate('admin')">
-                <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 1 0-16 0"/></svg>
-                Admin
+            <button class="nav-item" id="adminNavBtn" style="display:none" onclick="navigate('admin')">
+                <span class="nav-icon">👤</span>
+                <span class="nav-text">Admin</span>
             </button>
         </nav>
     </div>
